@@ -1,1 +1,3 @@
-# fitness-regression-mod
+# fitness-data-mod
+## bimodal histograms and pair plots
+![](dataVisuals/um.png)
