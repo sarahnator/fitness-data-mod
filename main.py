@@ -1,12 +1,10 @@
-import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
+from util import lin_reg_mod, plot_all, pair_hist_plot
 import os
 import sys
 import getopt
 
 basepath = "/Users/cookiemonster/PycharmProjects/python-checkin/exportedData"
-from sklearn import linear_model
 from sklearn.model_selection import train_test_split
 
 
@@ -32,10 +30,7 @@ if __name__ == "__main__":
     # print("X_test shape: {}".format(X_test.shape))
     # print("y_test shape: {}".format(y_test.shape))
 
-    # inspect data
-    df = pd.DataFrame(X_train, columns=['Calories', 'Steps'])
-    scatMatrix = pd.plotting.scatter_matrix(df, c=y_train, figsize=(5, 5), marker='o',
-                                            hist_kwds={'bins': 20}, s=60, alpha=.8, cmap="CMRmap_r")
-    plt.show()
-    #print(df)
 
+    lin_reg_mod(X_train, X_test, y_train, y_test)
+    plot_all(X_train)
+    pair_hist_plot(X_train, y_train)
