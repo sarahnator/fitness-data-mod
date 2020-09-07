@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from util import lin_reg_mod, plot_all, pair_hist_plot
 import os
 import sys
@@ -16,13 +17,16 @@ if __name__ == "__main__":
 
     X_in = np.loadtxt(basepath + '/X_data.csv', dtype="int", delimiter=",")
     y_out = np.loadtxt(basepath + '/y_data.csv', dtype="float", delimiter=",")
-
+    df = pd.read_csv(basepath + '/all.csv', delimiter=",")
+    
+    # print(df)
     # debugging
     # print(X_in)
     # print(y_out)
+    # print(all)
 
     # split data, targets into training/testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X_in, y_out, random_state=0)
+    #X_train, X_test, y_train, y_test = train_test_split(X_in, y_out, random_state=0)
 
     # inspect shapes
     # print("X_train shape: {}".format(X_train.shape))
@@ -31,6 +35,8 @@ if __name__ == "__main__":
     # print("y_test shape: {}".format(y_test.shape))
 
 
-    lin_reg_mod(X_train, X_test, y_train, y_test)
-    plot_all(X_train)
-    pair_hist_plot(X_train, y_train)
+    lin_reg_mod(df, 'Steps', 'Weight')
+    lin_reg_mod(df, 'Carb', 'Fiber')
+    # lin_reg_mod(df, 'Date', 'Calories') # need to convert to datetime object or sth first
+    # plot_all(X_train)
+    # pair_hist_plot(X_train, y_train)
