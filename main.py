@@ -38,5 +38,5 @@ if __name__ == "__main__":
     lin_reg_mod(df, 'Steps', 'Weight')
     lin_reg_mod(df, 'Carb', 'Fiber')
     # lin_reg_mod(df, 'Date', 'Calories') # need to convert to datetime object or sth first
-    # plot_all(X_train)
+    plot_all(df)
     # pair_hist_plot(X_train, y_train)

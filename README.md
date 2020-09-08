@@ -3,5 +3,8 @@
 ![](dataVisuals/steps_weight_text.png)
 ![](dataVisuals/carb_fiber_text.png)
 
+## another plot
+![](dataVisuals/macros.png)
+
 ## bimodal histograms + pair plots
 ![](dataVisuals/um.png)

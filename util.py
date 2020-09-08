@@ -6,17 +6,40 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 
 
-def plot_all(X_train):
-    df = pd.DataFrame(X_train, columns=['Calories', 'Steps'])
-    print(df)
-    df.plot()
-    plt.title('Steps & Calories')
+def plot_all(df):
+    """
+    Plots macronutrients, including fiber, and their averages on a single plot.
+    TODO: make subplots for steps, distance, calories
+    :param df: mfp and fitbit dataframe
+    """
+    # print(df)
+    strIndices = {'Weight': '0', 'Date': '1', 'Calories': '2', 'Protein': '3', 'Carb': '4', 'Fat': '5', 'Fiber': '6',
+               'Steps': '7', 'Distance': '8'}
+    macrosList = ['Carb', 'Protein', 'Fat', 'Fiber'] # fiber is not a macronutrient but for labeling purposes we will say yes
+
+    macros = df[[strIndices['Carb'], strIndices['Protein'], strIndices['Fat'], strIndices['Fiber']]].copy()
+    fig, ax = plt.subplots()
+    macros.plot(ax=ax)
+    # df.plot()
+    for m in macrosList:
+        print(f"Average {m}:", macros[strIndices[m]].mean())
+        ax.hlines(macros[strIndices[m]].mean(), -.5, 110, linestyles='dashed')
+        if m != 'Fiber':
+            ax.annotate(f"Average {m}", (50, macros[strIndices[m]].mean() + 6))
+        else:
+            ax.annotate(f"Average {m}", (50, macros[strIndices[m]].mean() - 10))
+
+    ax.legend(['Carbohydrate', 'Protein', 'Fat', 'Fiber'], fontsize=10)
+    ax.set_title('Macronutrients')
+    ax.tick_params(axis='both')
+    ax.set_xlabel('Tracking Day')
+    ax.set_ylabel('Quantity [g]')
     plt.show()
 
 
 def lin_reg_mod(df, x, y):
     """
-    Produces a least-squares linear regression model by plotting an attribute @param index against weight
+    Produces a least-squares linear regression model by plotting attribute y as a function of attribute x
     Produces statistics including linear coefficient, mean squared error, and coefficient of determination
     :param df: dataframe that contains combined mfp and fitbit data
     :param x: String of the set {'Date', 'Calories', 'Protein', 'Carb', 'Fat', 'Fiber', 'Steps, 'Distance'}. Functions as dependent variable.
