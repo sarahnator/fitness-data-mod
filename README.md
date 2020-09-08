@@ -1,3 +1,7 @@
 # fitness-data-mod
-## bimodal histograms and pair plots
+## LS Linear Regression
+![](dataVisuals/steps_weight_text.png)
+![](dataVisuals/carb_fiber_text.png)
+
+## bimodal histograms + pair plots
 ![](dataVisuals/um.png)
