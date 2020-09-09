@@ -6,33 +6,44 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 
 
-def plot_all(df):
+def plot_macros(df):
     """
     Plots macronutrients, including fiber, and their averages on a single plot.
     TODO: make subplots for steps, distance, calories
     :param df: mfp and fitbit dataframe
     """
-    # print(df)
+
     strIndices = {'Weight': '0', 'Date': '1', 'Calories': '2', 'Protein': '3', 'Carb': '4', 'Fat': '5', 'Fiber': '6',
                'Steps': '7', 'Distance': '8'}
     macrosList = ['Carb', 'Protein', 'Fat', 'Fiber'] # fiber is not a macronutrient but for labeling purposes we will say yes
     macros = df[[strIndices['Carb'], strIndices['Protein'], strIndices['Fat'], strIndices['Fiber']]].copy()
-    colors = ['b', 'r', 'g', 'm']
-    fig, axs = plt.subplots(2, 2)
+    colors = ['b', 'r', 'y', 'm']
+
+    fig, axs = plt.subplots(2, 2, figsize=(10, 6))
+    style = dict(size=10, color='gray') # unused
+
     for m in macrosList:
+        # indexing
         index = macrosList.index(m)
-        m1 = index // 2
-        m2 = index % 2
-        print(f"Average {m}:", macros[strIndices[m]].mean())
-        axs[m1, m2].set_title(f"{m}")
-        axs[m1, m2].hlines(macros[strIndices[m]].mean(), -.5, 110, linestyles='dashed')
-        axs[m1, m2].annotate(f"Average ", (50, macros[strIndices[m]].mean() + 6))
-        axs[m1, m2].tick_params(axis='both')
-        axs[m1, m2].set_xlabel('Tracking Day Number')
-        axs[m1, m2].set_ylabel('Quantity [g]')
-        axs[m1, m2].plot(df[strIndices[m]], color=colors[index])
-    fig.suptitle('Macronutrient Data')
-    fig.tight_layout(pad=0.5)
+        r = index // 2  # row
+        c = index % 2   # col
+
+        print(f"Average {m}:", macros[strIndices[m]].mean()) # print cool values
+
+        # subplot stuff
+        axs[r, c].set_title(f"{m}")
+        axs[r, c].hlines(macros[strIndices[m]].mean(), -.5, 110, linestyles='dashed', color='gray')
+        axs[r, c].annotate('Average', (45, macros[strIndices[m]].mean()))
+        axs[r, c].tick_params(axis='both')
+        axs[r, c].set_xlabel('Tracking Day Number')
+        axs[r, c].set_ylabel('Quantity [g]')
+        axs[r, c].plot(df[strIndices[m]], color=colors[index])
+
+    fig.suptitle('Macronutrient Data', fontsize=20)
+    fig.tight_layout()
+    fig.subplots_adjust(hspace=0.5)
+    fig.subplots_adjust(top=0.85)
+
     plt.show()
 
     ## difficult to read if all macronutrients clusted on single graph
