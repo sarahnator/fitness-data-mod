@@ -34,9 +34,9 @@ if __name__ == "__main__":
     # print("X_test shape: {}".format(X_test.shape))
     # print("y_test shape: {}".format(y_test.shape))
 
-
-    lin_reg_mod(df, 'Steps', 'Weight')
-    lin_reg_mod(df, 'Carb', 'Fiber')
+    ## lin reg working
+    #lin_reg_mod(df, 'Steps', 'Weight')
+    #lin_reg_mod(df, 'Carb', 'Fiber')
     # lin_reg_mod(df, 'Date', 'Calories') # need to convert to datetime object or sth first
     plot_all(df)
-    # pair_hist_plot(X_train, y_train)
+    # pair_hist_plot(X_train, y_train)     # todo: what even is this

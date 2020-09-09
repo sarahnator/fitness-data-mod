@@ -16,25 +16,43 @@ def plot_all(df):
     strIndices = {'Weight': '0', 'Date': '1', 'Calories': '2', 'Protein': '3', 'Carb': '4', 'Fat': '5', 'Fiber': '6',
                'Steps': '7', 'Distance': '8'}
     macrosList = ['Carb', 'Protein', 'Fat', 'Fiber'] # fiber is not a macronutrient but for labeling purposes we will say yes
-
     macros = df[[strIndices['Carb'], strIndices['Protein'], strIndices['Fat'], strIndices['Fiber']]].copy()
-    fig, ax = plt.subplots()
-    macros.plot(ax=ax)
-    # df.plot()
+    colors = ['b', 'r', 'g', 'm']
+    fig, axs = plt.subplots(2, 2)
     for m in macrosList:
+        index = macrosList.index(m)
+        m1 = index // 2
+        m2 = index % 2
         print(f"Average {m}:", macros[strIndices[m]].mean())
-        ax.hlines(macros[strIndices[m]].mean(), -.5, 110, linestyles='dashed')
-        if m != 'Fiber':
-            ax.annotate(f"Average {m}", (50, macros[strIndices[m]].mean() + 6))
-        else:
-            ax.annotate(f"Average {m}", (50, macros[strIndices[m]].mean() - 10))
-
-    ax.legend(['Carbohydrate', 'Protein', 'Fat', 'Fiber'], fontsize=10)
-    ax.set_title('Macronutrients')
-    ax.tick_params(axis='both')
-    ax.set_xlabel('Tracking Day')
-    ax.set_ylabel('Quantity [g]')
+        axs[m1, m2].set_title(f"{m}")
+        axs[m1, m2].hlines(macros[strIndices[m]].mean(), -.5, 110, linestyles='dashed')
+        axs[m1, m2].annotate(f"Average ", (50, macros[strIndices[m]].mean() + 6))
+        axs[m1, m2].tick_params(axis='both')
+        axs[m1, m2].set_xlabel('Tracking Day Number')
+        axs[m1, m2].set_ylabel('Quantity [g]')
+        axs[m1, m2].plot(df[strIndices[m]], color=colors[index])
+    fig.suptitle('Macronutrient Data')
+    fig.tight_layout(pad=0.5)
     plt.show()
+
+    ## difficult to read if all macronutrients clusted on single graph
+    # fig, ax = plt.subplots()
+    # macros.plot(ax=ax)
+    # # df.plot()
+    # for m in macrosList:
+    #     print(f"Average {m}:", macros[strIndices[m]].mean())
+    #     ax.hlines(macros[strIndices[m]].mean(), -.5, 110, linestyles='dashed')
+    #     if m != 'Fiber':
+    #         ax.annotate(f"Average {m}", (50, macros[strIndices[m]].mean() + 6))
+    #     else:
+    #         ax.annotate(f"Average {m}", (50, macros[strIndices[m]].mean() - 10))
+    #
+    # ax.legend(['Carbohydrate', 'Protein', 'Fat', 'Fiber'], fontsize=10)
+    # ax.set_title('Macronutrients')
+    # ax.tick_params(axis='both')
+    # ax.set_xlabel('Tracking Day')
+    # ax.set_ylabel('Quantity [g]')
+    # plt.show()
 
 
 def lin_reg_mod(df, x, y):
